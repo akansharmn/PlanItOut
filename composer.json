@@ -1,0 +1,14 @@
+
+{
+    "name": "planitout/meal-planner",
+    "description": "A meal planning application",
+    "type": "project",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PlanItOut\\": "src/"
+        }
+    }
+}
