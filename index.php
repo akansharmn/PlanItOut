@@ -6,6 +6,8 @@ echo '<h1>Hello World! from Akansha</h1>';
 try {
     // Get database connection details from environment variables
     $db_url = getenv('DATABASE_URL');
+  $db_user = getenv('DATABASE_USER');
+  $db_password = getenv('DATABASE_PASSWORD');
 
     if ($db_url) {
         echo '<h2>Database Connection</h2>';
@@ -13,7 +15,7 @@ try {
 
         // Example connection (commented out until database is created)
         
-        $dbConn = new PDO($db_url);
+        $dbConn = new PDO($db_url, db_user, db_password);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         echo '<p>Successfully connected to the database!</p>';
 

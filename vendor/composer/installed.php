@@ -3,7 +3,7 @@
         'name' => 'planitout/meal-planner',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4304b4b5dd2134b6000c823aaf652b275a30643f',
+        'reference' => 'c5480af58238b5d1ab2bc63fcda6a42c13da8833',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'planitout/meal-planner' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4304b4b5dd2134b6000c823aaf652b275a30643f',
+            'reference' => 'c5480af58238b5d1ab2bc63fcda6a42c13da8833',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
