@@ -1,0 +1,85 @@
+
+<?php
+echo '<h1>Hello World! from Akansha</h1>';
+
+// Database connection configuration
+$host = '0.0.0.0';
+$dbname = 'planitout';
+$username = 'root';
+$password = '';
+$charset = 'utf8mb4';
+
+try {
+    // Try using environment variables first (for PostgreSQL)
+    $db_url = getenv('DATABASE_URL');
+    
+    if ($db_url) {
+        // PostgreSQL connection
+        echo '<h2>PostgreSQL Database Connection</h2>';
+        echo '<p>Database URL is configured. Connected to PostgreSQL.</p>';
+        
+        $dbConn = new PDO($db_url);
+        $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo '<p>Successfully connected to PostgreSQL database!</p>';
+        
+        // Example PostgreSQL query
+        $stmt = $dbConn->query('SELECT current_timestamp');
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
+    } else {
+        // MySQL connection
+        echo '<h2>MySQL Database Connection</h2>';
+        
+        // Connect with PDO
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password, $options);
+            echo '<p>Successfully connected to MySQL database!</p>';
+            
+            // Example query to create a table if it doesn't exist
+            $sql = "CREATE TABLE IF NOT EXISTS meals (
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                description TEXT,
+                day_of_week VARCHAR(20),
+                meal_type VARCHAR(20),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )";
+            
+            $pdo->exec($sql);
+            echo "<p>Meals table is ready</p>";
+            
+            // Example query
+            $stmt = $pdo->query('SELECT NOW() as current_time');
+            $result = $stmt->fetch();
+            echo '<p>Current MySQL time: ' . $result['current_time'] . '</p>';
+            
+        } catch (PDOException $e) {
+            echo '<p>MySQL Connection failed: ' . $e->getMessage() . '</p>';
+            echo '<p>You may need to initialize MySQL with the commands shown at the bottom of this page.</p>';
+        }
+    }
+} catch (PDOException $e) {
+    echo '<p>Database connection error: ' . $e->getMessage() . '</p>';
+}
+
+// MySQL initialization instructions
+echo '<h3>MySQL Setup Instructions:</h3>';
+echo '<pre>
+# To initialize MySQL, run these commands in the Replit shell:
+nix-shell -p mysql
+mkdir -p ${HOME}/.mysql
+mysqld --initialize-insecure --datadir=${HOME}/.mysql
+mysqld --datadir=${HOME}/.mysql &
+mysql -e "CREATE DATABASE IF NOT EXISTS planitout;"
+</pre>';
+
+// Display PHP info
+phpinfo();
+?>

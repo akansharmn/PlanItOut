@@ -30,5 +30,5 @@ try {
 }
 
 // Display PHP info
-phpinfo();
+// phpinfo();
 ?>
