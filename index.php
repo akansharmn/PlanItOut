@@ -6,6 +6,8 @@ echo '<h1>Hello World! from Akansha</h1>';
 try {
     // Get database connection details from environment variables
     $db_url = getenv('DATABASE_URL');
+    
+    echo '<p>Database URL: ' . $db_url . '</p>';
   $db_user = 'neondb_owner'; //getenv('PGUSER');
   $db_password = 'npg_UM6tP9EakcVi'; //getenv('PGPASSWORD');
 
@@ -15,7 +17,7 @@ try {
 
         // Example connection (commented out until database is created)
         
-        $dbConn = new PDO($db_url, $db_user, $db_password);
+        $dbConn = new PDO($db_url);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         echo '<p>Successfully connected to the database!</p>';
 
@@ -24,7 +26,7 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
 
-        $stmt1 = $dbConn->query('SLECET * from test');
+        $stmt1 = $dbConn->query('SELECT * from test');
         $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
         echo '<p>Current row: ' . $result1['name'] . '</p>';
         
