@@ -21,6 +21,10 @@ try {
         $stmt = $dbConn->query('SELECT current_timestamp');
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
+
+        $stmt1 = $dbConn->query('SLECET * from test');
+        $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+        echo '<p>Current row: ' . $result1['name'] . '</p>';
         
     } else {
         echo '<p>No database configured yet. Create a PostgreSQL database from the Database tab.</p>';
