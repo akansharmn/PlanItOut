@@ -12,7 +12,7 @@ try {
         echo '<p>Database URL is configured. You can connect to PostgreSQL.</p>';
 
         // Example connection (commented out until database is created)
-        /*
+        
         $dbConn = new PDO($db_url);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         echo '<p>Successfully connected to the database!</p>';
@@ -21,7 +21,7 @@ try {
         $stmt = $dbConn->query('SELECT current_timestamp');
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
-        */
+        
     } else {
         echo '<p>No database configured yet. Create a PostgreSQL database from the Database tab.</p>';
     }
