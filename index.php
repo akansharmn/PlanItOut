@@ -8,8 +8,7 @@ try {
     $db_url = getenv('DATABASE_URL');
     
     echo '<p>Database URL: ' . $db_url . '</p>';
-  $db_user = 'neondb_owner'; //getenv('PGUSER');
-  $db_password = 'npg_UM6tP9EakcVi'; //getenv('PGPASSWORD');
+
 
     if ($db_url) {
         echo '<h2>Database Connection</h2>';
@@ -34,7 +33,7 @@ try {
         echo '<p>No database configured yet. Create a PostgreSQL database from the Database tab.</p>';
     }
 } catch (PDOException $e) {
-    echo '<p>Database connection error: ' . $e->getMessage() . '</p>';
+    echo '<p>Database connection error: ' . $e->getTraceAsString() . '</p>';
 }
 
 // Display PHP info
