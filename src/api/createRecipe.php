@@ -25,11 +25,11 @@ $jsonData = file_get_contents('php://input');
 $data = json_decode($jsonData, true);
 
 // Validate input data
-if (!$data || !isset($data['recipeName']) || !isset($data['ingredients']) || !isset($data['prePreparations'])) {
+if (!$data  || !isset($data['prePreparations'])) {
     http_response_code(400); // Bad Request
     echo json_encode([
         'status' => 'error',
-        'message' => 'Missing required fields: recipeName, ingredients, prePreparations'
+        'message' => 'Missing required fields: recipeName'
     ]);
     exit;
 }

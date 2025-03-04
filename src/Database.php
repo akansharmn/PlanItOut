@@ -29,14 +29,14 @@ class Database {
             echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
 
             // Check if test table exists first
-            $tablesQuery = $this->connection->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+            /*$tablesQuery = $this->connection->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
             $tables = $tablesQuery->fetchAll(PDO::FETCH_COLUMN);
 
             echo "<p>Available tables:<br>";
             foreach ($tables as $table) {
                 echo "- $table -";
             }
-            echo "</p>";
+            echo "</p>";*/
         } catch (PDOException $e) {
             echo '<p>Detailed connection error: ' . $e->getMessage() . '</p>';
         }
