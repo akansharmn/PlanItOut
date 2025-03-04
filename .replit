@@ -7,7 +7,7 @@ channel = "stable-24_05"
 run = ["sh", "-c", "php index.php"]
 
 [workflows]
-runButton = "Initialize Database"
+runButton = "Run API"
 
 [[workflows.workflow]]
 name = "Initialize Database"
@@ -16,3 +16,15 @@ author = 39585346
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "php init_db.php"
+
+[[workflows.workflow]]
+name = "Run API"
+author = 39585346
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "php -S 0.0.0.0:8080 api.php"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
