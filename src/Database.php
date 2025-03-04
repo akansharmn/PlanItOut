@@ -12,27 +12,26 @@ class Database {
     
     private function __construct() {
         // Get database connection details from environment variables
-        $db_parts = parse_url($db_url);
         $host = getenv('PGHOST');
         $port = getenv('PGPORT');
         $dbname= getenv('PGDATABASE');
         $username = getenv('PGUSER'); 
         $password = getenv('PGPASSWORD');
 
-        $dsn = "pgsql:host=${host};port=${port};dbname= ${dbname}";
+        $dsn = "pgsql:host=${host};port=${port};dbname=${dbname}";
 
         try {
-            $connection = new PDO($dsn1, $username, $password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection = new PDO($dsn, $username, $password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo '<p>Successfully connected to the database!</p>';
 
             // Example query
-            $stmt = $connection->query('SELECT current_timestamp');
+            $stmt = $this->connection->query('SELECT current_timestamp');
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
 
             // Check if test table exists first
-            $tablesQuery = $connection->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+            $tablesQuery = $this->connection->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
             $tables = $tablesQuery->fetchAll(PDO::FETCH_COLUMN);
 
             echo "<p>Available tables:<br>";
@@ -43,7 +42,7 @@ class Database {
         } catch (PDOException $e) {
             echo '<p>Detailed connection error: ' . $e->getMessage() . '</p>';
         }
-        } 
+    } 
     
     public static function getInstance(): Database {
         if (self::$instance === null) {
