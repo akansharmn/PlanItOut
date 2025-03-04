@@ -11,14 +11,26 @@ class Database {
     private PDO $connection;
     
     private function __construct() {
-        $db_url = 'postgresql://neondb_owner:npg_UM6tP9EakcVi@ep-wild-frost-a6h1l00f.us-west-2.aws.neon.tech/neondb?sslmode=require'
+        $db_url = 'postgresql://neondb_owner:npg_UM6tP9EakcVi@ep-wild-frost-a6h1l00f.us-west-2.aws.neon.tech/neondb?sslmode=require';
         
         if (!$db_url) {
             throw new PDOException("No DATABASE_URL environment variable set");
         }
         
         try {
-            $this->connection = new PDO($db_url);
+            // Parse the connection string to properly format it for PDO
+            $db_parts = parse_url($db_url);
+            $dsn = "pgsql:host={$db_parts['host']};dbname=" . ltrim($db_parts['path'], '/');
+            
+            // Add port if specified
+            if (isset($db_parts['port'])) {
+                $dsn .= ";port={$db_parts['port']}";
+            }
+            
+            $username = $db_parts['user'];
+            $password = $db_parts['pass'];
+            
+            $this->connection = new PDO($dsn, $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw new PDOException("Database connection failed: " . $e->getMessage());
