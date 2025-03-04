@@ -1,8 +1,5 @@
-namespace PlanItOut;
-
 <?php
-
-
+namespace PlanItOut;
 // Include necessary files
 
 require_once 'debug.php';
@@ -12,8 +9,8 @@ require_once 'src/Database.php'; // Include the Database class file
 echo '<h1>Hello World! from Akansha</h1>';
 
 // Database connection
-$db = new Database();
-$conn = $db->getInstance()->getConnection();
+// $db = new Database()
+$db = Database::getInstance();
 
 // Rest of the code remains the same...
 $db->query("
