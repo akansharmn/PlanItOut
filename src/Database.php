@@ -11,7 +11,7 @@ class Database {
     private PDO $connection;
     
     private function __construct() {
-        $db_url = getenv('DATABASE_URL');
+        $db_url = 'postgresql://neondb_owner:npg_UM6tP9EakcVi@ep-wild-frost-a6h1l00f.us-west-2.aws.neon.tech/neondb?sslmode=require'
         
         if (!$db_url) {
             throw new PDOException("No DATABASE_URL environment variable set");

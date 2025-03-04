@@ -8,7 +8,9 @@ echo '<h1>Hello World! from Akansha</h1>';
 // Database connection
 try {
     // Get database connection details from environment variables
-    $db_url = getenv('DATABASE_URL');
+    $db_url = 'postgresql://neondb_owner:npg_UM6tP9EakcVi@ep-wild-frost-a6h1l00f.us-west-2.aws.neon.tech:5432/neondb?sslmode=require';
+    // getenv('DATABASE_URL');
+   // new PDO()
     
     echo '<p>Database URL: ' . $db_url . '</p>';
 
@@ -46,21 +48,29 @@ try {
                 
                 echo "<p>Available tables:<br>";
                 foreach ($tables as $table) {
-                    echo "- $table<br>";
+                    echo "- $table -";
                 }
                 echo "</p>";
                 
-                if (in_array('test', $tables)) {
-                    $stmt1 = $dbConn->query('SELECT * FROM test');
-                    $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
-                    if ($result1) {
-                        echo '<p>Current row: ' . $result1['name'] . '</p>';
-                    } else {
-                        echo '<p>No data found in test table</p>';
-                    }
-                } else {
-                    echo '<p>Test table does not exist yet</p>';
+                $dbConn->query("
+                    CREATE TABLE IF NOT EXISTS recipes (
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(255) NOT NULL,
+                        ingredients TEXT,
+                        prerequisites TEXT,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ");
+
+               
+
+                $tablesQuery1 = $dbConn->query("SELECT * from public.recipes");
+                $tables1 = $tablesQuery1->fetchAll(PDO::FETCH_COLUMN);
+
+                foreach ($tables1 as $table1) {
+                    echo "- $table1 -";
                 }
+                
             } catch (PDOException $e) {
                 echo '<p>Detailed connection error: ' . $e->getMessage() . '</p>';
             }
