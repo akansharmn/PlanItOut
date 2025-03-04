@@ -20,6 +20,10 @@ switch ($endpoint) {
         require_once 'src/api/createRecipe.php';
         break;
         
+    case 'createMealPreference':
+        require_once 'src/api/createMealPreference.php';
+        break;
+        
     default:
         // Return 404 for unknown endpoints
         header('HTTP/1.1 404 Not Found');
