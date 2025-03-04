@@ -5,3 +5,14 @@ channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "php index.php"]
+
+[workflows]
+runButton = "Initialize Database"
+
+[[workflows.workflow]]
+name = "Initialize Database"
+author = 39585346
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "php init_db.php"

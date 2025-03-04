@@ -6,13 +6,13 @@ public class Recipe {
     // Define properties here
     private string $recipeName;
     private string $ingredients;
-    private string $prerequisites;
+    private string $prePreparations;
 
     // Constructor
-    public function __construct(string $recipeName, string $ingredients, string $prerequisites) {
+    public function __construct(string $recipeName, string $ingredients, string $prePreparations) {
         $this->recipeName = recipeName;
         $this->ingredients = $ingredients;
-        $this->$prerequisites = $prerequisites;
+        $this->$prePreparations = $prePreparations;
     }
 
     // Getter and Setter for recipeName
@@ -34,11 +34,11 @@ public class Recipe {
     }
 
     // Getter and Setter for prerequisites
-    public function getPrerequisites(): string {
-        return $this->prerequisites;
+    public function getPrePreparations(): string {
+        return $this->$prePreparations;
     }
 
-    public function setPrerequisites(string $prerequisites): void {
-        $this->prerequisites = $prerequisites;
+    public function setPrePreparations(string $prePreparations): void {
+        $this->$prePreparations = $prePreparations;
     }
 }

@@ -1,6 +1,4 @@
-
 <?php
-
 namespace PlanItOut;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -21,8 +19,8 @@ try {
         CREATE TABLE IF NOT EXISTS recipes (
             id SERIAL PRIMARY KEY,
             recipe_name VARCHAR(255) NOT NULL,
-            ingredients TEXT NOT NULL,
-            prerequisites TEXT NOT NULL,
+            ingredients TEXT,
+            pre_preparations TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ");
@@ -72,17 +70,15 @@ try {
             id SERIAL PRIMARY KEY,
             year INT NOT NULL,
             week INT NOT NULL,
-            week_start_date DATE NOT NULL,
-            week_end_date DATE NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(year, week)
         )
     ");
     
     // Create DayMealPlans table
-    echo "<p>Creating DayMealPlans table...</p>";
+    echo "<p>Creating WeekDayMealPlans table...</p>";
     $db->query("
-        CREATE TABLE IF NOT EXISTS day_meal_plans (
+        CREATE TABLE IF NOT EXISTS week_day_meal_plans (
             id SERIAL PRIMARY KEY,
             weekly_plan_id INT NOT NULL,
             weekday_id INT NOT NULL,
@@ -93,7 +89,7 @@ try {
             FOREIGN KEY (weekday_id) REFERENCES weekdays(id),
             FOREIGN KEY (meal_type_id) REFERENCES meal_types(id),
             FOREIGN KEY (recipe_id) REFERENCES recipes(id),
-            UNIQUE(weekly_plan_id, weekday_id, meal_type_id)
+            UNIQUE(weekly_plan_id, weekday_id, meal_type_id, recipe_id)
         )
     ");
     
@@ -104,7 +100,6 @@ try {
             id SERIAL PRIMARY KEY,
             meal_type_id INT NOT NULL,
             recipe_id INT NOT NULL,
-            preference_level INT DEFAULT 5, -- Scale 1-10 for preference level
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (meal_type_id) REFERENCES meal_types(id),
             FOREIGN KEY (recipe_id) REFERENCES recipes(id),
@@ -119,19 +114,19 @@ try {
     $recipeIds[] = $db->insert('recipes', [
         'recipe_name' => 'Spaghetti Carbonara',
         'ingredients' => 'Pasta, Eggs, Bacon, Parmesan Cheese, Black Pepper',
-        'prerequisites' => 'Cook pasta al dente, crisp bacon before mixing'
+        'pre_preparations' => 'Cook pasta al dente, crisp bacon before mixing'
     ]);
     
     $recipeIds[] = $db->insert('recipes', [
         'recipe_name' => 'Chicken Curry',
         'ingredients' => 'Chicken, Onions, Curry Powder, Coconut Milk, Garlic, Ginger',
-        'prerequisites' => 'Marinate chicken for at least 1 hour'
+        'pre_preparations' => 'Marinate chicken for at least 1 hour'
     ]);
     
     $recipeIds[] = $db->insert('recipes', [
         'recipe_name' => 'Pancakes',
         'ingredients' => 'Flour, Eggs, Milk, Sugar, Baking Powder',
-        'prerequisites' => 'Mix all ingredients until smooth'
+        'pre_preparations' => 'Mix all ingredients until smooth'
     ]);
     
     echo "<p>Database initialization completed successfully!</p>";
