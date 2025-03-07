@@ -1,0 +1,56 @@
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+          <h1 class="h3 mb-0">Add New Recipe</h1>
+        </div>
+        <div class="card-body">
+          <form hx-post="/createRecipe" hx-target="#form-response" hx-swap="outerHTML" hx-indicator="#loading-indicator">
+            <!-- Recipe Name -->
+            <div class="mb-3">
+              <label for="recipeName" class="form-label">Recipe Name</label>
+              <input type="text" class="form-control" id="recipeName" name="recipeName" required>
+            </div>
+            
+            <!-- Ingredients -->
+            <div class="mb-3">
+              <label for="ingredients" class="form-label">Ingredients</label>
+              <textarea class="form-control" id="ingredients" name="ingredients" rows="5" placeholder="Enter ingredients, one per line" required></textarea>
+              <div class="form-text">List each ingredient on a new line.</div>
+            </div>
+            
+            <!-- Preparation Instructions -->
+            <div class="mb-3">
+              <label for="prePreparations" class="form-label">Preparation Instructions</label>
+              <textarea class="form-control" id="prePreparations" name="prePreparations" rows="5" placeholder="Enter preparation steps" required></textarea>
+              <div class="form-text">Describe the preparation process in detail.</div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-between align-items-center">
+              <button type="submit" class="btn btn-primary">
+                <span class="spinner-border spinner-border-sm d-none" id="loading-indicator" role="status" aria-hidden="true"></span>
+                Create Recipe
+              </button>
+              <a href="/" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+          
+          <!-- Response Area -->
+          <div id="form-response" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reset form script -->
+<script>
+  document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+    if (evt.detail.xhr.getResponseHeader('HX-Trigger') === '{"resetForm": true}') {
+      document.querySelector('form').reset();
+    }
+  });
+</script>
