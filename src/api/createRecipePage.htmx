@@ -30,7 +30,7 @@
               <label for="prePreparations" class="form-label">Preparation Instructions</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-journal-text"></i></span>
-                <textarea class="form-control" id="prePreparations" name="prePreparations" rows="5" placeholder="Describe the preparation steps" required></textarea>
+                <textarea class="form-control" id="prePreparations" name="prePreparations" rows="5" placeholder="Describe the pre-preparation steps" required></textarea>
               </div>
             </div>
 

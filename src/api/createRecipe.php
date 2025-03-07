@@ -6,9 +6,13 @@ require_once __DIR__ . '/../../debug.php';
 
 use PlanItOut\Database;
 use PDOException;
+use PlanItOut\Logger;
 
 // Set content type to JSON
 header('Content-Type: application/json');
+
+Logger::debug($_SERVER['REQUEST_METHOD'] . ' request received');
+
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -24,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if ($_SERVER['CONTENT_TYPE'] && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
     // Get JSON data from the request body
     $jsonData = file_get_contents('php://input');
+    Logger::debug($jsonData);
     $data = json_decode($jsonData, true);
 } else {
     // Get form data
