@@ -1,9 +1,10 @@
+
 <?php include 'src/templates/header.php'; ?>
 
 <h1 class="page-title">Add New Recipe</h1>
 
 <div class="mdc-card">
-    <form hx-post="/createRecipe" hx-swap="outerHTML">
+    <form id="recipe-form" hx-post="/createRecipe" hx-swap="none" hx-on::after-request="handleFormSubmit(event)">
         <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon" style="width: 100%; margin-bottom: 16px;">
             <span class="mdc-notched-outline">
                 <span class="mdc-notched-outline__leading"></span>
@@ -24,7 +25,7 @@
                 </span>
                 <span class="mdc-notched-outline__trailing"></span>
             </span>
-            <textarea id="ingredients" name="ingredients" class="mdc-text-field__input" rows="5" aria-labelledby="ingredients-label" required></textarea>
+            <textarea id="ingredients" name="ingredients" class="mdc-text-field__input" rows="5" aria-labelledby="ingredients-label" required placeholder="Enter each ingredient on a new line"></textarea>
         </div>
         
         <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea" style="width: 100%; margin-bottom: 24px;">
@@ -35,7 +36,7 @@
                 </span>
                 <span class="mdc-notched-outline__trailing"></span>
             </span>
-            <textarea id="prePreparations" name="prePreparations" class="mdc-text-field__input" rows="5" aria-labelledby="prep-label" required></textarea>
+            <textarea id="prePreparations" name="prePreparations" class="mdc-text-field__input" rows="5" aria-labelledby="prep-label" required placeholder="Describe the preparation steps"></textarea>
         </div>
         
         <button class="mdc-button mdc-button--raised" type="submit">
@@ -45,15 +46,70 @@
         </button>
     </form>
 
-    <div id="result"></div>
+    <div id="result-toast" class="mdc-snackbar">
+        <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+            <div class="mdc-snackbar__label" aria-atomic="false">
+                Recipe added successfully!
+            </div>
+            <div class="mdc-snackbar__actions" aria-atomic="true">
+                <button type="button" class="mdc-button mdc-snackbar__action">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">OK</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <p style="margin-top: 16px;">
-        <a href="/recipes" class="mdc-button">
+        <a href="/home" class="mdc-button">
             <span class="mdc-button__ripple"></span>
             <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_back</i>
-            <span class="mdc-button__label">Back to Recipes</span>
+            <span class="mdc-button__label">Back to Home</span>
         </a>
     </p>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Material Design Components
+        const textFields = document.querySelectorAll('.mdc-text-field');
+        textFields.forEach(textField => {
+            mdc.textField.MDCTextField.attachTo(textField);
+        });
+        
+        const buttons = document.querySelectorAll('.mdc-button');
+        buttons.forEach(button => {
+            mdc.ripple.MDCRipple.attachTo(button);
+        });
+        
+        // Initialize snackbar
+        const snackbar = mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
+        
+        window.handleFormSubmit = function(event) {
+            const status = event.detail.successful;
+            const xhr = event.detail.xhr;
+            
+            if (status) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        document.querySelector('.mdc-snackbar__label').textContent = 'Recipe added successfully!';
+                        snackbar.open();
+                        document.getElementById('recipe-form').reset();
+                    } else {
+                        document.querySelector('.mdc-snackbar__label').textContent = 'Error: ' + response.message;
+                        snackbar.open();
+                    }
+                } catch (e) {
+                    document.querySelector('.mdc-snackbar__label').textContent = 'Error processing response';
+                    snackbar.open();
+                }
+            } else {
+                document.querySelector('.mdc-snackbar__label').textContent = 'Error: Failed to submit form';
+                snackbar.open();
+            }
+        };
+    });
+</script>
 
 <?php include 'src/templates/footer.php'; ?>

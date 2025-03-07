@@ -33,9 +33,13 @@ switch ($endpoint) {
         require_once 'src/api/recipe-details.php';
         break;
         
-    // Index page - redirect to recipes
+    case 'home':
+        require_once 'src/api/home.php';
+        break;
+        
+    // Index page - redirect to home
     case '':
-        header('Location: /recipes'); 
+        header('Location: /home'); 
         exit;
         
     default:

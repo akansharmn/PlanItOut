@@ -20,16 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get JSON data from the request body
-$jsonData = file_get_contents('php://input');
-$data = json_decode($jsonData, true);
+// Check if data is coming from a form or as JSON
+if ($_SERVER['CONTENT_TYPE'] && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    // Get JSON data from the request body
+    $jsonData = file_get_contents('php://input');
+    $data = json_decode($jsonData, true);
+} else {
+    // Get form data
+    $data = $_POST;
+}
 
 // Validate input data
-if (!$data  || !isset($data['prePreparations'])) {
+if (!$data || !isset($data['recipeName']) || !isset($data['ingredients']) || !isset($data['prePreparations'])) {
     http_response_code(400); // Bad Request
     echo json_encode([
         'status' => 'error',
-        'message' => 'Missing required fields: recipeName'
+        'message' => 'Missing required fields: recipeName, ingredients, or prePreparations'
     ]);
     exit;
 }
