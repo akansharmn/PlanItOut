@@ -1,68 +1,52 @@
 
-<div class="mdc-card welcome-card">
+<div class="welcome-card">
     <h1 class="page-title">Welcome to PlanItOut</h1>
     <p class="welcome-text">Plan your weekly meals for the entire family with ease</p>
     
     <div class="action-cards-container">
         <!-- Create Recipe Card -->
-        <div class="mdc-card action-card">
-            <div class="mdc-card__primary-action" tabindex="0">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-color: #6200ee;">
-                    <div class="mdc-card__media-content">
-                        <i class="material-icons" style="font-size: 64px; color: white;">restaurant</i>
-                    </div>
-                </div>
-                <div style="padding: 16px;">
-                    <h2 class="mdc-typography--headline6">Create Recipe</h2>
-                    <p class="mdc-typography--body2">Add new recipes to your collection for meal planning.</p>
+        <div class="action-card">
+            <div class="card-media">
+                <div class="card-icon">
+                    <i class="material-icons">restaurant</i>
                 </div>
             </div>
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="/createRecipe" class="mdc-button mdc-card__action mdc-card__action--button">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Get Started</span>
-                    </a>
-                </div>
+            <div class="card-content">
+                <h2>Create Recipe</h2>
+                <p>Add new recipes to your collection for meal planning.</p>
+            </div>
+            <div class="card-actions">
+                <a href="/createRecipe" class="button">
+                    Get Started
+                </a>
             </div>
         </div>
         
         <!-- Plan My Week Card -->
-        <div class="mdc-card action-card">
-            <div class="mdc-card__primary-action" tabindex="0">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-color: #018786;">
-                    <div class="mdc-card__media-content">
-                        <i class="material-icons" style="font-size: 64px; color: white;">calendar_today</i>
-                    </div>
-                </div>
-                <div style="padding: 16px;">
-                    <h2 class="mdc-typography--headline6">Plan My Week</h2>
-                    <p class="mdc-typography--body2">Create and manage your weekly meal schedule.</p>
+        <div class="action-card">
+            <div class="card-media" style="background-color: #018786;">
+                <div class="card-icon">
+                    <i class="material-icons">calendar_today</i>
                 </div>
             </div>
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="/recipes" class="mdc-button mdc-card__action mdc-card__action--button">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Get Started</span>
-                    </a>
-                </div>
+            <div class="card-content">
+                <h2>Plan My Week</h2>
+                <p>Create and manage your weekly meal schedule.</p>
+            </div>
+            <div class="card-actions">
+                <a href="/recipes" class="button">
+                    Get Started
+                </a>
             </div>
         </div>
     </div>
     
     <!-- Recent Recipes Section -->
     <div class="recent-recipes">
-        <h2 class="mdc-typography--headline6">Your Recent Recipes</h2>
+        <h2>Your Recent Recipes</h2>
         <div id="recent-recipes-container" hx-get="/recipes" hx-trigger="load" hx-target="#recent-recipes-container">
-            <div class="mdc-linear-progress mdc-linear-progress--indeterminate" role="progressbar">
-                <div class="mdc-linear-progress__buffer"></div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
+            <div class="progress-indicator">
+                Loading...
             </div>
         </div>
     </div>
@@ -73,6 +57,8 @@
         margin-bottom: 40px;
         padding: 24px;
         background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
     .welcome-text {
@@ -91,16 +77,55 @@
     .action-card {
         flex: 1;
         min-width: 300px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        background-color: white;
+        overflow: hidden;
     }
     
-    .action-card .mdc-card__media {
+    .card-media {
+        height: 140px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: #6200ee;
+    }
+    
+    .card-icon i {
+        font-size: 64px;
+        color: white;
+    }
+    
+    .card-content {
+        padding: 16px;
+    }
+    
+    .card-actions {
+        padding: 8px 16px 16px;
+    }
+    
+    .button {
+        display: inline-block;
+        background-color: #0077cc;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .button:hover {
+        background-color: #005fa3;
     }
     
     .recent-recipes {
         margin-top: 32px;
+    }
+    
+    .progress-indicator {
+        text-align: center;
+        padding: 20px;
+        color: #666;
     }
     
     @media (max-width: 768px) {

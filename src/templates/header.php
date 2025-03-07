@@ -7,14 +7,11 @@
     <title>PlanItOut</title>
     <!-- Include HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLfu/aRVyM" crossorigin="anonymous"></script>
-    <!-- Material Design Components -->
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <!-- Material Icons -->
+    <!-- Material Icons (keeping for icon support) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         body {
-            font-family: Roboto, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -25,12 +22,8 @@
             margin: 0 auto;
             padding: 20px;
         }
-        .mdc-card {
-            margin-bottom: 20px;
-            padding: 16px;
-        }
         .page-title {
-            color: #6200ee;
+            color: #333;
             margin-bottom: 24px;
         }
     </style>
