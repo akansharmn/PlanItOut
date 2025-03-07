@@ -1,90 +1,115 @@
-<?php include 'src/templates/header.php'; ?>
 
 <div class="container py-4">
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <h1 class="card-title text-info mb-4">Add New Recipe</h1>
-
-            <form id="recipe-form" hx-post="/createRecipe" hx-swap="none" hx-on::after-request="handleFormSubmit(event)">
-                <div class="mb-3">
-                    <label for="recipeName" class="form-label">Recipe Name</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-egg-fried"></i>
-                        </span>
-                        <input type="text" id="recipeName" name="recipeName" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ingredients" class="form-label">Ingredients</label>
-                    <textarea id="ingredients" name="ingredients" class="form-control" rows="4" required placeholder="List ingredients, one per line"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="prePreparations" class="form-label">Pre-Preparation Steps</label>
-                    <textarea id="prePreparations" name="prePreparations" class="form-control" rows="5" required placeholder="Describe the pre-preparation steps"></textarea>
-                </div>
-
-                <button class="btn btn-info text-white" type="submit">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Add Recipe
-                </button>
-            </form>
-
-            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-                <div id="resultToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="me-auto">Recipe Status</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        Recipe added successfully!
-                    </div>
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-info text-white">
+          <h1 class="h3 mb-0">Add New Recipe</h1>
         </div>
+        <div class="card-body">
+          <form hx-post="/createRecipe" hx-swap="none" hx-indicator="#loading-indicator">
+            <!-- Recipe Name -->
+            <div class="mb-3">
+              <label for="recipeName" class="form-label">Recipe Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                <input type="text" class="form-control" id="recipeName" name="recipeName" placeholder="Enter recipe name" required>
+              </div>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="mb-3">
+              <label for="ingredients" class="form-label">Ingredients</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-list-ul"></i></span>
+                <textarea class="form-control" id="ingredients" name="ingredients" rows="4" placeholder="List ingredients, one per line" required></textarea>
+              </div>
+            </div>
+
+            <!-- Preparation Instructions -->
+            <div class="mb-3">
+              <label for="prePreparations" class="form-label">Preparation Instructions</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-journal-text"></i></span>
+                <textarea class="form-control" id="prePreparations" name="prePreparations" rows="5" placeholder="Describe the preparation steps" required></textarea>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-info text-white">
+                <span class="bi bi-plus-circle me-2"></span>Add Recipe
+              </button>
+            </div>
+          </form>
+
+          <!-- Loading Indicator -->
+          <div id="loading-indicator" class="htmx-indicator text-center my-3">
+            <div class="spinner-border text-info" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Processing your recipe...</p>
+          </div>
+
+          <!-- Toast/Alert for feedback -->
+          <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="recipe-toast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                  Recipe created successfully!
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize toast
-        window.resultToast = new bootstrap.Toast(document.getElementById('resultToast'));
-
-        window.handleFormSubmit = function(event) {
-            const status = event.detail.successful;
-            const xhr = event.detail.xhr;
-
-            if (status) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.status === 'success') {
-                        document.querySelector('.toast-body').textContent = 'Recipe added successfully!';
-                        document.querySelector('.toast-header').classList.remove('bg-danger', 'text-white');
-                        document.querySelector('.toast-header').classList.add('bg-success', 'text-white');
-                        window.resultToast.show();
-                        document.getElementById('recipe-form').reset();
-                    } else {
-                        document.querySelector('.toast-body').textContent = 'Error: ' + response.message;
-                        document.querySelector('.toast-header').classList.remove('bg-success', 'text-white');
-                        document.querySelector('.toast-header').classList.add('bg-danger', 'text-white');
-                        window.resultToast.show();
-                    }
-                } catch (e) {
-                    document.querySelector('.toast-body').textContent = 'Error processing response';
-                    document.querySelector('.toast-header').classList.remove('bg-success', 'text-white');
-                    document.querySelector('.toast-header').classList.add('bg-danger', 'text-white');
-                    window.resultToast.show();
-                }
-            } else {
-                document.querySelector('.toast-body').textContent = 'Error: Failed to submit form';
-                document.querySelector('.toast-header').classList.remove('bg-success', 'text-white');
-                document.querySelector('.toast-header').classList.add('bg-danger', 'text-white');
-                window.resultToast.show();
-            }
-        };
-    });
+  document.addEventListener('htmx:afterRequest', function(event) {
+    if (event.detail.pathInfo.requestPath === '/createRecipe') {
+      const toastEl = document.getElementById('recipe-toast');
+      const toast = new bootstrap.Toast(toastEl);
+      
+      try {
+        const response = JSON.parse(event.detail.xhr.responseText);
+        const toastMessage = document.getElementById('toast-message');
+        
+        if (response.status === 'success') {
+          toastEl.classList.remove('text-bg-danger');
+          toastEl.classList.add('text-bg-success');
+          toastMessage.textContent = 'Recipe added successfully!';
+          
+          // Reset the form
+          event.detail.elt.reset();
+        } else {
+          toastEl.classList.remove('text-bg-success');
+          toastEl.classList.add('text-bg-danger');
+          toastMessage.textContent = 'Error: ' + response.message;
+        }
+      } catch (e) {
+        // Handle parsing error
+        toastEl.classList.remove('text-bg-success');
+        toastEl.classList.add('text-bg-danger');
+        document.getElementById('toast-message').textContent = 'Error processing response';
+      }
+      
+      toast.show();
+    }
+  });
 </script>
 
-<?php include 'src/templates/footer.php'; ?>
+<style>
+  .htmx-indicator {
+    display: none;
+  }
+  .htmx-request .htmx-indicator {
+    display: block;
+  }
+  .htmx-request.htmx-indicator {
+    display: block;
+  }
+</style>
