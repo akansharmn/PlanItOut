@@ -35,7 +35,7 @@ switch ($endpoint) {
         
     // Index page - redirect to recipes
     case '':
-        header('Location: /recipes');
+        header('Location: /recipes'); 
         exit;
         
     default:
