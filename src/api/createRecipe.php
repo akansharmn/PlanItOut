@@ -10,6 +10,7 @@ use PlanItOut\Logger;
 
 // Set content type to JSON
 header('Content-Type: application/json');
+Logger::debug("entered createRecipe.php"");
 
 Logger::debug($_SERVER['REQUEST_METHOD'] . ' request received');
 

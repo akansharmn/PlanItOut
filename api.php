@@ -13,7 +13,8 @@ $endpoint = ltrim($path, '/');
 // Print the value of uri, path, and endpoint
 //error_log('URI: ' . $uri);
 //Logger::debug('Path: ' . $path);
-Logger::debug('Endpoint: ' . $endpoint);
+Logger::debug('New request: Endpoint: ' . $endpoint);
+//Logger::debug(print_r($_SERVER, true))
 
 //Logger::debug('URI: ' . $uri)
     
@@ -22,7 +23,7 @@ switch ($endpoint) {
         require_once 'src/api/health.php';
         break;
         
-    case 'createRecipe':
+    case 'loadRecipe':
         require_once 'src/api/createRecipe.php';
         break;
 
