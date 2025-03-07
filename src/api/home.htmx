@@ -1,22 +1,22 @@
 <div class="container py-4">
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <h1 class="card-title text-primary">Welcome to PlanItOut</h1>
-            <p class="card-text lead mb-4">Plan your weekly meals for the entire family with ease</p>
+    <div class="card shadow-lg mb-4 border-0" style="background-color: #f8f9fa;">
+        <div class="card-body p-4">
+            <h1 class="card-title text-info mb-3">Welcome to PlanItOut</h1>
+            <p class="card-text lead mb-5" style="color: #495057;">Plan your weekly meals for the entire family with ease</p>
 
-            <div class="row mb-5">
+            <div class="row mb-5 g-4">
                 <!-- Create Recipe Card -->
                 <div class="col-md-6 mb-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-header bg-primary text-white p-3 text-center">
-                            <i class="material-icons display-4">restaurant</i>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <div class="card-header bg-info text-white p-4 text-center">
+                            <i class="material-icons display-3">restaurant</i>
                         </div>
-                        <div class="card-body">
-                            <h2 class="card-title h4">Create Recipe</h2>
-                            <p class="card-text">Add new recipes to your collection for meal planning.</p>
+                        <div class="card-body p-4">
+                            <h2 class="card-title h4 mb-3">Create Recipe</h2>
+                            <p class="card-text text-muted">Add new recipes to your collection for meal planning.</p>
                         </div>
-                        <div class="card-footer bg-white border-top-0">
-                            <a href="/createRecipe" class="btn btn-primary">
+                        <div class="card-footer bg-white border-top-0 p-3">
+                            <a href="/createRecipe" class="btn btn-info text-white w-100">
                                 Get Started
                             </a>
                         </div>
@@ -25,16 +25,16 @@
 
                 <!-- Plan My Week Card -->
                 <div class="col-md-6 mb-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-header bg-success text-white p-3 text-center">
-                            <i class="material-icons display-4">calendar_today</i>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <div class="card-header bg-warning text-dark p-4 text-center">
+                            <i class="material-icons display-3">calendar_today</i>
                         </div>
-                        <div class="card-body">
-                            <h2 class="card-title h4">Plan My Week</h2>
-                            <p class="card-text">Create and manage your weekly meal schedule.</p>
+                        <div class="card-body p-4">
+                            <h2 class="card-title h4 mb-3">Plan My Week</h2>
+                            <p class="card-text text-muted">Create and manage your weekly meal schedule.</p>
                         </div>
-                        <div class="card-footer bg-white border-top-0">
-                            <a href="/recipes" class="btn btn-success">
+                        <div class="card-footer bg-white border-top-0 p-3">
+                            <a href="/recipes" class="btn btn-warning w-100">
                                 Get Started
                             </a>
                         </div>
@@ -43,17 +43,37 @@
             </div>
 
             <!-- Recent Recipes Section -->
-            <div class="recent-recipes">
-                <h2 class="h3 mb-3 border-bottom pb-2">Your Recent Recipes</h2>
+            <div class="recent-recipes p-3 bg-white rounded-3 shadow-sm">
+                <h2 class="h3 mb-4 pb-3 border-bottom" style="color: #17a2b8;">Your Recent Recipes</h2>
                 <div id="recent-recipes-container" class="mt-3" hx-get="/recipes" hx-trigger="load" hx-target="#recent-recipes-container">
                     <div class="text-center py-4">
-                        <div class="spinner-border text-primary" role="status">
+                        <div class="spinner-border text-info" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <p class="mt-2 text-muted">Loading your recipes...</p>
+                        <p class="mt-3 text-muted">Loading your recipes...</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Custom hover effects */
+.card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+.btn-info, .btn-warning {
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+</style>
