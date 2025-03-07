@@ -11,6 +11,23 @@
     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLfu/aRVyM" crossorigin="anonymous"></script>
     <!-- Material Icons (keeping for icon support) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!-- HTMX script for form reset -->
+<script>
+  document.addEventListener('htmx:afterSettle', function(event) {
+    // Check if the resetForm event was triggered
+    const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
+    if (triggerHeader) {
+      const triggers = JSON.parse(triggerHeader);
+      if (triggers.resetForm) {
+        // Find the form and reset it
+        const form = document.querySelector('form[hx-post="/createRecipe"]');
+        if (form) form.reset();
+      }
+    }
+  });
+</script>
+
     <style>
         body {
             font-family: Arial, sans-serif;

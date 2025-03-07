@@ -56,22 +56,47 @@ try {
         'pre_preparations' => $data['prePreparations']
     ]);
     
-    // Return success response
+    // Return success response with HTML for HTMX
     http_response_code(201); // Created
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'Recipe created successfully',
-        'data' => [
-            'id' => $recipeId,
-            'recipeName' => $data['recipeName']
-        ]
-    ]);
+    
+    // Check if it's an HTMX request
+    if (isset($_SERVER['HTTP_HX_REQUEST'])) {
+        // Return HTML response for HTMX
+        echo '<div id="form-response" class="alert alert-success mt-3" role="alert">';
+        echo '<i class="bi bi-check-circle-fill me-2"></i>';
+        echo 'Recipe "' . htmlspecialchars($data['recipeName']) . '" created successfully!';
+        echo '</div>';
+        
+        // Add a trigger to reset the form
+        header("HX-Trigger: {\"resetForm\": true}");
+    } else {
+        // Return JSON for API clients
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Recipe created successfully',
+            'data' => [
+                'id' => $recipeId,
+                'recipeName' => $data['recipeName']
+            ]
+        ]);
+    }
     
 } catch (PDOException $e) {
     // Return error response
     http_response_code(500); // Internal Server Error
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Failed to create recipe: ' . $e->getMessage()
-    ]);
+    
+    // Check if it's an HTMX request
+    if (isset($_SERVER['HTTP_HX_REQUEST'])) {
+        // Return HTML response for HTMX
+        echo '<div id="form-response" class="alert alert-danger mt-3" role="alert">';
+        echo '<i class="bi bi-exclamation-triangle-fill me-2"></i>';
+        echo 'Error: Failed to create recipe - ' . htmlspecialchars($e->getMessage());
+        echo '</div>';
+    } else {
+        // Return JSON for API clients
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to create recipe: ' . $e->getMessage()
+        ]);
+    }
 }
