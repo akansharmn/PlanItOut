@@ -20,7 +20,9 @@ switch ($endpoint) {
         require_once 'src/api/createRecipe.php';
         break;
 
-    case 'createRecipeForm'
+    case 'createRecipeForm':
+        require_once 'src/api/createRecipePage.php';
+        break;
         
     case 'createMealPreference':
         require_once 'src/api/createMealPreference.php';
