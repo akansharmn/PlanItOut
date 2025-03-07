@@ -23,7 +23,8 @@ switch ($endpoint) {
         require_once 'src/api/health.php';
         break;
         
-    case 'loadRecipe':
+    case 'loadRecipe':  // Keep for backward compatibility
+    case 'createRecipe':
         require_once 'src/api/createRecipe.php';
         break;
 
