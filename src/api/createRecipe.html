@@ -1,28 +1,60 @@
+
 <?php include 'src/templates/header.php'; ?>
 
-<h1>Add New Recipe</h1>
+<h1 class="page-title">Add New Recipe</h1>
 
-<form hx-post="/createRecipe" hx-swap="outerHTML">
-    <div>
-        <label for="recipeName">Recipe Name:</label>
-        <input type="text" id="recipeName" name="recipeName" required>
-    </div>
-    
-    <div>
-        <label for="ingredients">Ingredients:</label>
-        <textarea id="ingredients" name="ingredients" rows="5" required></textarea>
-    </div>
-    
-    <div>
-        <label for="prePreparations">Preparation Instructions:</label>
-        <textarea id="prePreparations" name="prePreparations" rows="5" required></textarea>
-    </div>
-    
-    <button type="submit">Add Recipe</button>
-</form>
+<div class="mdc-card">
+    <form hx-post="/createRecipe" hx-swap="outerHTML">
+        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon" style="width: 100%; margin-bottom: 16px;">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="recipe-name-label">Recipe Name</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">restaurant</i>
+            <input type="text" id="recipeName" name="recipeName" class="mdc-text-field__input" aria-labelledby="recipe-name-label" required>
+        </div>
+        
+        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea" style="width: 100%; margin-bottom: 16px;">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="ingredients-label">Ingredients</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <textarea id="ingredients" name="ingredients" class="mdc-text-field__input" rows="5" aria-labelledby="ingredients-label" required></textarea>
+        </div>
+        
+        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea" style="width: 100%; margin-bottom: 24px;">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="prep-label">Preparation Instructions</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <textarea id="prePreparations" name="prePreparations" class="mdc-text-field__input" rows="5" aria-labelledby="prep-label" required></textarea>
+        </div>
+        
+        <button class="mdc-button mdc-button--raised" type="submit">
+            <span class="mdc-button__ripple"></span>
+            <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
+            <span class="mdc-button__label">Add Recipe</span>
+        </button>
+    </form>
 
-<div id="result"></div>
+    <div id="result"></div>
 
-<p><a href="/recipes">Back to Recipes</a></p>
+    <p style="margin-top: 16px;">
+        <a href="/recipes" class="mdc-button">
+            <span class="mdc-button__ripple"></span>
+            <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_back</i>
+            <span class="mdc-button__label">Back to Recipes</span>
+        </a>
+    </p>
+</div>
 
 <?php include 'src/templates/footer.php'; ?>
