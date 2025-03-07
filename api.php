@@ -10,7 +10,10 @@ $path = parse_url($uri, PHP_URL_PATH);
 
 // Remove leading slash and get endpoint
 $endpoint = ltrim($path, '/');
-
+// Print the value of uri, path, and endpoint
+error_log('URI: ' . $uri);
+error_log('Path: ' . $path);
+error_log('Endpoint: ' . $endpoint);
 switch ($endpoint) {
     case 'health':
         require_once 'src/api/health.php';
