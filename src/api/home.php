@@ -2,118 +2,11 @@
 namespace PlanItOut\Api;
 
 include 'src/templates/header.php';
+
+// Include the home.htmx content
+$homeHtmxContent = file_get_contents('src/api/home.htmx');
+echo $homeHtmxContent;
 ?>
-
-<div class="mdc-card welcome-card">
-    <h1 class="page-title">Welcome to PlanItOut</h1>
-    <p class="welcome-text">Plan your weekly meals for the entire family with ease</p>
-    
-    <div class="action-cards-container">
-        <!-- Create Recipe Card -->
-        <div class="mdc-card action-card">
-            <div class="mdc-card__primary-action" tabindex="0">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-color: #6200ee;">
-                    <div class="mdc-card__media-content">
-                        <i class="material-icons" style="font-size: 64px; color: white;">restaurant</i>
-                    </div>
-                </div>
-                <div style="padding: 16px;">
-                    <h2 class="mdc-typography--headline6">Create Recipe</h2>
-                    <p class="mdc-typography--body2">Add new recipes to your collection for meal planning.</p>
-                </div>
-            </div>
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="/createRecipe.html" class="mdc-button mdc-card__action mdc-card__action--button">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Get Started</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Plan My Week Card -->
-        <div class="mdc-card action-card">
-            <div class="mdc-card__primary-action" tabindex="0">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-color: #018786;">
-                    <div class="mdc-card__media-content">
-                        <i class="material-icons" style="font-size: 64px; color: white;">calendar_today</i>
-                    </div>
-                </div>
-                <div style="padding: 16px;">
-                    <h2 class="mdc-typography--headline6">Plan My Week</h2>
-                    <p class="mdc-typography--body2">Create and manage your weekly meal schedule.</p>
-                </div>
-            </div>
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="/recipes" class="mdc-button mdc-card__action mdc-card__action--button">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Get Started</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Recent Recipes Section -->
-    <div class="recent-recipes">
-        <h2 class="mdc-typography--headline6">Your Recent Recipes</h2>
-        <div id="recent-recipes-container" hx-get="/recipes" hx-trigger="load" hx-target="#recent-recipes-container">
-            <div class="mdc-linear-progress mdc-linear-progress--indeterminate" role="progressbar">
-                <div class="mdc-linear-progress__buffer"></div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
-                <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-                    <span class="mdc-linear-progress__bar-inner"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    .welcome-card {
-        margin-bottom: 40px;
-        padding: 24px;
-        background-color: white;
-    }
-    
-    .welcome-text {
-        font-size: 18px;
-        color: #666;
-        margin-bottom: 32px;
-    }
-    
-    .action-cards-container {
-        display: flex;
-        gap: 24px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-    
-    .action-card {
-        flex: 1;
-        min-width: 300px;
-    }
-    
-    .action-card .mdc-card__media {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .recent-recipes {
-        margin-top: 32px;
-    }
-    
-    @media (max-width: 768px) {
-        .action-cards-container {
-            flex-direction: column;
-        }
-    }
-</style>
 
 <script>
     // Initialize Material Design Components
@@ -123,7 +16,13 @@ include 'src/templates/header.php';
         buttons.forEach(button => {
             mdc.ripple.MDCRipple.attachTo(button);
         });
-        
+
+        // Initialize cards with ripple effect
+        const cardPrimaryActions = document.querySelectorAll('.mdc-card__primary-action');
+        cardPrimaryActions.forEach(element => {
+            mdc.ripple.MDCRipple.attachTo(element);
+        });
+
         // Initialize linear progress
         const linearProgress = document.querySelector('.mdc-linear-progress');
         if (linearProgress) {
