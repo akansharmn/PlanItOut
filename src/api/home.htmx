@@ -16,7 +16,7 @@
                             <p class="card-text text-muted">Add new recipes to your collection for meal planning.</p>
                         </div>
                         <div class="card-footer bg-white border-top-0 p-3">
-                            <a href="/createRecipe" class="btn btn-info text-white w-100">
+                            <a href="/createRecipePage" class="btn btn-info text-white w-100">
                                 Get Started
                             </a>
                         </div>

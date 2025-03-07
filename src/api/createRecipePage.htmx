@@ -22,8 +22,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="prePreparations" class="form-label">Preparation Instructions</label>
-                    <textarea id="prePreparations" name="prePreparations" class="form-control" rows="5" required placeholder="Describe the preparation steps"></textarea>
+                    <label for="prePreparations" class="form-label">Pre-Preparation Steps</label>
+                    <textarea id="prePreparations" name="prePreparations" class="form-control" rows="5" required placeholder="Describe the pre-preparation steps"></textarea>
                 </div>
 
                 <button class="btn btn-info text-white" type="submit">
