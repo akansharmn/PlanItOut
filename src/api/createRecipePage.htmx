@@ -46,11 +46,11 @@
   </div>
 </div>
 
-<!-- Reset form script 
+<!-- Reset form script -->
 <script>
   document.body.addEventListener('htmx:afterOnLoad', function(evt) {
     if (evt.detail.xhr.getResponseHeader('HX-Trigger') === '{"resetForm": true}') {
       document.querySelector('form').reset();
     }
   });
-</script>  -->
+</script>
