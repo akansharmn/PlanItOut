@@ -13,19 +13,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <!-- HTMX script for form reset -->
-<script>
-  document.addEventListener('htmx:afterSettle', function(event) {
-    // Check if the resetForm event was triggered
-    const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
-    if (triggerHeader) {
-      const triggers = JSON.parse(triggerHeader);
-      if (triggers.resetForm) {
-        // Find the form and reset it
-        const form = document.querySelector('form[hx-post="/createRecipe"]');
-        if (form) form.reset();
-      }
-    }
-  });
+ <script>
+  // document.addEventListener('htmx:afterSettle', function(event) {
+  //   // Check if the resetForm event was triggered
+  //   const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
+  //   if (triggerHeader) {
+  //     const triggers = JSON.parse(triggerHeader);
+  //     if (triggers.resetForm) {
+  //       // Find the form and reset it
+  //       const form = document.querySelector('form[hx-post="/createRecipe"]');
+  //       if (form) form.reset();
+  //     }
+  //   }
+  // });
 </script>
 
     <style>

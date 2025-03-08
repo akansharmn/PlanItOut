@@ -1,0 +1,18 @@
+<form>
+
+   <input type="recipeName" name="recipeName" />
+
+   <input type="ingredients" name="ingredients" />
+
+   <input type="prePreparations" name="prePreparations"/>
+
+   <button hx-post="http://localhost:1330/login"  hx-target="#replaceMe"
+                        hx-swap="outerHTML">
+    Submit
+  </button>
+
+</form>
+
+<!-- Response Area -->
+    <div id="form-response" class="mt-3"></div>
+  </div>
