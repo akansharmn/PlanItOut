@@ -3,6 +3,7 @@ namespace PlanItOut;
 
 use PDO;
 use PDOException;
+use PlanItOut\Logger;
 
 class Database {
     private static $instance = null;
@@ -21,22 +22,13 @@ class Database {
         try {
             $this->connection = new PDO($dsn, $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo '<p>Successfully connected to the database!</p>';
+            Logger::debug('<p>Successfully connected to the database!</p>');
 
             // Example query
             $stmt = $this->connection->query('SELECT current_timestamp');
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo '<p>Current database time: ' . $result['current_timestamp'] . '</p>';
+            Logger::debug('<p>Current database time: ' . $result['current_timestamp'] . '</p>');
 
-            // Check if test table exists first
-            /*$tablesQuery = $this->connection->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
-            $tables = $tablesQuery->fetchAll(PDO::FETCH_COLUMN);
-
-            echo "<p>Available tables:<br>";
-            foreach ($tables as $table) {
-                echo "- $table -";
-            }
-            echo "</p>";*/
         } catch (PDOException $e) {
             echo '<p>Detailed connection error: ' . $e->getMessage() . '</p>';
         }
