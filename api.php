@@ -3,6 +3,10 @@ namespace PlanItOut;
 
 require_once 'vendor/autoload.php';
 require_once 'debug.php';
+require_once 'src/ErrorHandler.php';
+
+// Register error handlers to prevent warnings from showing in the UI
+ErrorHandler::register();
 
 // Simple router for API endpoints
 $uri = $_SERVER['REQUEST_URI'];
