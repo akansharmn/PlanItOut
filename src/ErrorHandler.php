@@ -41,12 +41,15 @@ class ErrorHandler {
     
     private static function displayFriendlyError() {
         // Clear any output that might have been sent
-        if (ob_get_level()) {
-            ob_clean();
+        while (ob_get_level()) {
+            ob_end_clean();
         }
         
         // Only display generic error in production
-        header('HTTP/1.1 500 Internal Server Error');
+        if (!headers_sent()) {
+            header('HTTP/1.1 500 Internal Server Error');
+        }
+        
         echo '<div style="text-align: center; margin-top: 50px;">';
         echo '<h1>Something went wrong</h1>';
         echo '<p>We\'re sorry, but there was an error processing your request.</p>';

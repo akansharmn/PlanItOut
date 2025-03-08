@@ -1,6 +1,9 @@
 <?php
 namespace PlanItOut;
 
+// Start output buffering
+ob_start();
+
 require_once 'vendor/autoload.php';
 require_once 'debug.php';
 require_once 'src/ErrorHandler.php';
@@ -55,8 +58,9 @@ switch ($endpoint) {
         
     // Index page - redirect to home
     case '':
-        header('Location: /home'); 
-        exit;
+        require_once 'src/Utils.php';
+        Utils::safeRedirect('/home');
+        break;
         
     default:
         // Return 404 for unknown endpoints
