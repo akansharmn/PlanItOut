@@ -83,8 +83,10 @@ try {
     }
     
 } catch (PDOException $e) {
+  //  Logger::debug('exception is'.$e)
     // Return error response
-    http_response_code(500); // Internal Server Error
+    //ToDo: Return status code accordingly and a better error message
+    http_response_code(201);// Internal Server Error
     
     // Check if it's an HTMX request
     if (isset($_SERVER['HTTP_HX_REQUEST'])) {
@@ -93,6 +95,7 @@ try {
         echo '<i class="bi bi-exclamation-triangle-fill me-2"></i>';
         echo 'Error: Failed to create recipe - ' . htmlspecialchars($e->getMessage());
         echo '</div>';
+         header("HX-Trigger: {\"resetForm\": true}");
     } else {
         // Return JSON for API clients
         echo json_encode([

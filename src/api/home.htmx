@@ -27,9 +27,9 @@
             </div>
             <div class="col-md-6">
               <button hx-get="/shopping-list" hx-target="#main-content" class="btn btn-outline-primary w-100">
-                <i class="bi bi-cart me-2"></i>Shopping List
+                <i class="bi bi-cart me-2"></i>Create Meal Preference
               </button>
-            </div>f
+            </div>
           </div>
         </div>
       </div>

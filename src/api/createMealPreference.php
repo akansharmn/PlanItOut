@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Get JSON data from the request body
-$jsonData = file_get_contents('php://input');
+$jsonData = file_get_contents('php://input'); 
 $data = json_decode($jsonData, true);
 
 // Validate input data

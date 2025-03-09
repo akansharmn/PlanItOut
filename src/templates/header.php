@@ -19,7 +19,7 @@
      const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
      if (triggerHeader) {
      const triggers = JSON.parse(triggerHeader);
-         Logger::debug(triggers);
+         Logger::debug(triggers)
       if (triggers.resetForm) {
          // Find the form and reset it
          const form = document.querySelector('form[hx-post="/createRecipe"]');

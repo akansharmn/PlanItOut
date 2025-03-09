@@ -16,7 +16,7 @@
             <!-- Ingredients -->
             <div class="mb-3">
               <label for="ingredients" class="form-label">Ingredients</label>
-              <textarea class="form-control" id="ingredients" name="ingredients" rows="5" placeholder="Enter ingredients, one per line are you listening" required></textarea>
+              <textarea class="form-control" id="ingredients" name="ingredients" rows="5" placeholder="Enter ingredients, one per line" required></textarea>
               <div class="form-text">List each ingredient on a new line.</div>
             </div>
 
@@ -42,7 +42,7 @@
         </div>
         <!-- Go Back Button -->
         <div class="card-footer">
-          <button hx-get="/home" hx-target="#main-content" class="btn btn-secondary">
+          <button hx-get="/home" hx-target="body" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Go Back
           </button>
         </div>
