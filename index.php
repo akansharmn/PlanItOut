@@ -6,7 +6,36 @@ require_once 'debug.php';
 require_once 'src/Database.php'; // Include the Database class file
 
 
-echo '<h1>Hello World! from Akansha</h1>';
+// Handle routing based on path
+$uri = $_SERVER['REQUEST_URI'];
+$path = parse_url($uri, PHP_URL_PATH);
+
+// Basic router
+switch ($path) {
+    case '/':
+    case '/home':
+        include 'src/api/home.php';
+        break;
+    case '/createRecipePage':
+        include 'src/api/createRecipePage.php';
+        break;
+    case '/createMealPreferencePage':
+        include 'src/api/createMealPreferencePage.php';
+        break;
+    case '/createRecipe':
+        include 'src/api/createRecipe.php';
+        break;
+    case '/createMealPreference':
+        include 'src/api/createMealPreference.php';
+        break;
+    case '/recipes':
+        include 'src/api/recipes.php';
+        break;
+    default:
+        http_response_code(404);
+        echo '<h1>Page Not Found</h1>';
+        break;
+}
 
 // Database connection
 // $db = new Database()
