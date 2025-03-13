@@ -25,7 +25,7 @@ Logger::debug('New request: Endpoint: ' . $endpoint);
 $auth = Auth\AuthManager::getInstance();
 
 // Define public endpoints that don't require authentication
-$publicEndpoints = ['login', 'register', 'health', 'home',''];
+$publicEndpoints = ['login', 'register', 'health', 'home', 'recent-recipes', 'upcoming-meals', ''];
 
 // Check if authentication is required for this endpoint
 $requireAuth = !in_array($endpoint, $publicEndpoints);
@@ -86,6 +86,12 @@ switch ($endpoint) {
         break;
     case 'logout':
         require_once 'src/api/logout.php';
+        break;
+    case 'recent-recipes':
+        require_once 'src/api/recent-recipes.php';
+        break;
+    case 'upcoming-meals':
+        require_once 'src/api/upcoming-meals.php';
         break;
     // Index page - redirect to home
     case '':
