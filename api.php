@@ -62,7 +62,8 @@ switch ($endpoint) {
     case 'register':
         require_once 'src/api/register.php';
         break;
-
+    case 'loginPage':
+            require_once 'src/api/loginPage.php';
     // Index page - redirect to home
     case '':
         require_once 'src/Utils.php';
