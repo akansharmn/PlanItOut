@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo 'Invalid username or password';
             echo '</div>';
             
-            // Add a trigger to reset the form
-            header("HX-Trigger: {\"resetForm\": true}");
+            // Add a trigger to reset the form - proper JSON format
+            header('HX-Trigger: {"resetForm": true}');
         } else {
             // For non-HTMX requests, set error variable to be displayed in template
             $error = 'Invalid username or password';
