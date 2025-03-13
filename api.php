@@ -7,6 +7,8 @@ ob_start();
 require_once 'vendor/autoload.php';
 require_once 'debug.php';
 require_once 'src/ErrorHandler.php';
+require_once 'src/auth/AuthManager.php';
+require_once 'src/Utils.php';
 
 // Register error handlers to prevent warnings from showing in the UI
 ErrorHandler::register();
@@ -17,13 +19,30 @@ $path = parse_url($uri, PHP_URL_PATH);
 
 // Remove leading slash and get endpoint
 $endpoint = ltrim($path, '/');
-// Print the value of uri, path, and endpoint
-//error_log('URI: ' . $uri);
-//Logger::debug('Path: ' . $path);
 Logger::debug('New request: Endpoint: ' . $endpoint);
-//Logger::debug(print_r($_SERVER, true))
 
-//Logger::debug('URI: ' . $uri)
+// Initialize auth manager
+$auth = Auth\AuthManager::getInstance();
+
+// Define public endpoints that don't require authentication
+$publicEndpoints = ['login', 'register', 'health', ''];
+
+// Check if authentication is required for this endpoint
+$requireAuth = !in_array($endpoint, $publicEndpoints);
+
+// If authentication is required and user is not logged in
+if ($requireAuth && !$auth->isLoggedIn()) {
+    Logger::debug('Authentication required for endpoint: ' . $endpoint);
+    
+    // If HTMX request, redirect via HX-Redirect
+    if (isset($_SERVER['HTTP_HX_REQUEST'])) {
+        header('HX-Redirect: /login');
+        exit;
+    } else {
+        // Standard redirect for regular requests
+        Utils::safeRedirect('/login');
+    }
+}
 
 switch ($endpoint) {
     case 'health':

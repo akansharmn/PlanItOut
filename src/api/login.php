@@ -1,3 +1,4 @@
+
 <?php
 namespace PlanItOut\Api;
 use PlanItOut\Logger;
@@ -57,13 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Invalid username or password';
         }
     }
-}  else {
-    // Include the registration form template
-    Logger::debug('entered non-post method section');
+} else {
+    // Display the login form
     include 'src/api/login.htmx';
 }
-
-
 
 // If not an HTMX request, include the footer
 if (!$isHtmxRequest) {
