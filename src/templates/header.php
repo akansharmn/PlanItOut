@@ -60,15 +60,23 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <?php if (isset($_SESSION['user'])): ?>
+        <div class="text-end mt-2">
+            <a href="/logout" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+        <?php endif; ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="/">PlanItOut</a>
-            
+
             <?php
             // Include auth manager
             require_once 'src/auth/AuthManager.php';
             $auth = \PlanItOut\Auth\AuthManager::getInstance();
-            
+
             // Display appropriate nav links based on auth status
             if ($auth->isLoggedIn()):
                 $user = $auth->getCurrentUser();
@@ -84,8 +92,7 @@
             <?php endif; ?>
         </div>
     </nav>
-    
-    <div class="container">
+
         <div id="main-content" class="container mt-4">
             <!-- HTMX content will be loaded here -->
         </div>
