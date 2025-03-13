@@ -24,12 +24,12 @@ Logger::debug('New request: Endpoint: ' . $endpoint);
 //Logger::debug(print_r($_SERVER, true))
 
 //Logger::debug('URI: ' . $uri)
-    
+
 switch ($endpoint) {
     case 'health':
         require_once 'src/api/health.php';
         break;
-        
+
     case 'loadRecipe':  // Keep for backward compatibility
     case 'createRecipe':
         require_once 'src/api/createRecipe.php';
@@ -38,37 +38,37 @@ switch ($endpoint) {
     case 'createRecipePage':
         require_once 'src/api/createRecipePage.php';
         break;
-        
+
     case 'createMealPreference':
         require_once 'src/api/createMealPreference.php';
         break;
-        
+
     // HTMX endpoints
     case 'recipes':
         require_once 'src/api/recipes.php';
         break;
-        
+
     case 'recipe-details':
         require_once 'src/api/recipe-details.php';
         break;
-        
+
     case 'home':
         require_once 'src/api/home.php';
         break;
     case 'createMealPreferencePage':
         require_once 'src/api/createMealPreferencePage.php';
         break;
-        
+
     case 'register':
         require_once 'src/api/register.php';
         break;
-        
+
     // Index page - redirect to home
     case '':
         require_once 'src/Utils.php';
         Utils::safeRedirect('/home');
         break;
-        
+
     default:
         // Return 404 for unknown endpoints
         if (strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false) {
