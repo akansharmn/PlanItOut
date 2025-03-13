@@ -59,6 +59,10 @@ switch ($endpoint) {
         require_once 'src/api/createMealPreferencePage.php';
         break;
         
+    case 'register':
+        require_once 'src/api/register.php';
+        break;
+        
     // Index page - redirect to home
     case '':
         require_once 'src/Utils.php';
