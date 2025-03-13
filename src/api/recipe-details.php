@@ -4,6 +4,19 @@ namespace PlanItOut\Api;
 
 require_once 'src/Database.php';
 use PlanItOut\Database;
+require_once 'src/auth/AuthManager.php';
+use PlanItOut\Auth\AuthManager;
+
+// Check if user is authenticated
+$auth = AuthManager::getInstance();
+$isAuthenticated = $auth->isLoggedIn();
+
+if (!$isAuthenticated) {
+    echo '<div class="alert alert-warning">';
+    echo '<p>Please <a href="/login">log in</a> to view recipe details.</p>';
+    echo '</div>';
+    exit;
+}
 
 // Get recipe ID from query string
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
