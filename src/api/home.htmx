@@ -1,67 +1,63 @@
 
-<div class="container">
-    <div class="row mb-4">
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Quick Actions</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <a href="/createRecipePage" class="btn btn-outline-primary btn-lg w-100">
-                                <i class="bi bi-plus-circle me-2"></i>Create Recipe
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">Welcome to PlanItOut</h1>
 
-    <!-- Recent Recipes Section -->
-    <div class="row mb-4">
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Recent Recipes</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        <!-- This will be populated by HTMX -->
-                        <div id="recent-recipes" hx-get="/api/recent-recipes" hx-trigger="load">
-                            <div class="text-center p-3">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2 class="h5 mb-0">Quick Actions</h2>
         </div>
-    </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <button hx-get="/createRecipePage" hx-target="body" class="btn btn-outline-primary w-100">
+                <i class="bi bi-plus-circle me-2"></i>Add Recipe
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button hx-get="/createMealPreferencePage" hx-target="body" class="btn btn-outline-primary w-100">
+                <i class="bi bi-plus-circle me-2"></i>Add Meal Preference
+              </button>
+            </div>
+            <div class="col-md-4">
+              <a href="/recipes" class="btn btn-outline-primary w-100">
+                <i class="bi bi-journal-text me-2"></i>View Recipes
+              </a>
+            </div>
+            <div class="col-md-6">
+              <button hx-get="/meal-planner" hx-target="#main-content" class="btn btn-outline-primary w-100">
+                <i class="bi bi-calendar-week me-2"></i>Plan Meals
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button hx-get="/shopping-list" hx-target="#main-content" class="btn btn-outline-primary w-100">
+                <i class="bi bi-cart me-2"></i>Create Meal Preference
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Upcoming Meals Section -->
-    <div class="row">
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Upcoming Meals</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        <!-- This will be populated by HTMX -->
-                        <div id="upcoming-meals" hx-get="/api/upcoming-meals" hx-trigger="load">
-                            <div class="text-center p-3">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h2 class="h5 mb-0">Recent Recipes</h2>
         </div>
+        <div class="card-body">
+          <!-- Using HTMX to load content when page loads -->
+          <div class="row" 
+               id="recent-recipes"
+               hx-get="/recipes" 
+               hx-trigger="load"
+               hx-indicator=".loading-indicator">
+            <div class="col-12 text-center py-3 loading-indicator">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
