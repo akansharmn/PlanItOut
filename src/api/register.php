@@ -5,14 +5,17 @@ require_once 'src/Database.php';
 require_once 'src/auth/AuthManager.php';
 use PlanItOut\Database;
 use PlanItOut\Auth\AuthManager;
+use PlanItOut\Logger;
 
 // Check if it's an HTMX request
 $isHtmxRequest = isset($_SERVER['HTTP_HX_REQUEST']);
+Logger::debug('HTMX request: ' . ($isHtmxRequest ? 'yes' : 'no'));
+Logger::debug('Request method: ' . $_SERVER['REQUEST_METHOD']);
 
 // If not an HTMX request, include the header
 if (!$isHtmxRequest) {
     include 'src/templates/header.php';
-}
+} 
 
 // Process registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -1,12 +1,16 @@
-
 <?php
 namespace PlanItOut\Api;
+use PlanItOut\Logger;
 
 require_once 'src/auth/AuthManager.php';
 use PlanItOut\Auth\AuthManager;
 
 // Check if it's an HTMX request
 $isHtmxRequest = isset($_SERVER['HTTP_HX_REQUEST']);
+
+Logger::debug("entered login.php");
+Logger::debug('HTMX request: ' . ($isHtmxRequest ? 'yes' : 'no'));
+Logger::debug($_SERVER['REQUEST_METHOD'] . ' request received');
 
 // If not an HTMX request, include the header
 if (!$isHtmxRequest) {
@@ -53,10 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Invalid username or password';
         }
     }
+}  else {
+    // Include the registration form template
+    Logger::debug('entered non-post method section');
+    include 'src/api/login.htmx';
 }
 
-// Include the HTMX template
-include 'src/api/login.htmx';
+
 
 // If not an HTMX request, include the footer
 if (!$isHtmxRequest) {
