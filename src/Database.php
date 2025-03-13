@@ -63,14 +63,12 @@ class Database {
         return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function insert(string $table, array $data): int {
+    public function insert(string $table, array $data): void {
         $columns = implode(', ', array_keys($data));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
         
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
         $this->query($sql, array_values($data));
-        
-        return $this->connection->lastInsertId();
     }
     
     public function update(string $table, array $data, string $where, array $whereParams = []): int {
