@@ -106,28 +106,22 @@ try {
             UNIQUE(meal_type_id, recipe_id)
         )
     ");
-    
-    // Insert some example data into Recipes
-    echo "<p>Adding example recipes...</p>";
-    $recipeIds = [];
-    
-    $recipeIds[] = $db->insert('recipes', [
-        'recipe_name' => 'Spaghetti Carbonara',
-        'ingredients' => 'Pasta, Eggs, Bacon, Parmesan Cheese, Black Pepper',
-        'pre_preparations' => 'Cook pasta al dente, crisp bacon before mixing'
-    ]);
-    
-    $recipeIds[] = $db->insert('recipes', [
-        'recipe_name' => 'Chicken Curry',
-        'ingredients' => 'Chicken, Onions, Curry Powder, Coconut Milk, Garlic, Ginger',
-        'pre_preparations' => 'Marinate chicken for at least 1 hour'
-    ]);
-    
-    $recipeIds[] = $db->insert('recipes', [
-        'recipe_name' => 'Pancakes',
-        'ingredients' => 'Flour, Eggs, Milk, Sugar, Baking Powder',
-        'pre_preparations' => 'Mix all ingredients until smooth'
-    ]);
+
+
+    // Create users table if it doesn't exist
+    echo "<p>Creating Users table...</p>";
+    $db->query("
+        CREATE TABLE IF NOT EXISTS users (
+            username TEXT PRIMARY KEY,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
+
+    Logger::debug('Database tables created successfully');
+    echo "<p>Database tables initialized successfully.</p>";
+
     
     echo "<p>Database initialization completed successfully!</p>";
     
@@ -142,46 +136,4 @@ try {
     
 } catch (PDOException $e) {
     echo "<p>Database error: " . $e->getMessage() . "</p>";
-}
-<?php
-namespace PlanItOut\DbScripts;
-
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../debug.php';
-
-use PlanItOut\Database;
-use PlanItOut\Logger;
-use PDOException;
-
-try {
-    // Get database connection
-    $db = Database::getInstance();
-    
-    // Create recipes table if it doesn't exist
-    $db->query("
-        CREATE TABLE IF NOT EXISTS recipes (
-            id SERIAL PRIMARY KEY,
-            recipe_name VARCHAR(255) NOT NULL,
-            ingredients TEXT,
-            pre_preparations TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ");
-    
-    // Create users table if it doesn't exist
-    $db->query("
-        CREATE TABLE IF NOT EXISTS users (
-            username TEXT PRIMARY KEY,
-            email TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ");
-    
-    Logger::debug('Database tables created successfully');
-    echo "<p>Database tables initialized successfully.</p>";
-    
-} catch (PDOException $e) {
-    Logger::debug('Database initialization error: ' . $e->getMessage());
-    echo "<p>Error initializing database: " . htmlspecialchars($e->getMessage()) . "</p>";
 }
