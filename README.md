@@ -1,7 +1,13 @@
 
 # PlanItOut
 
-A web application where users can plan weekly meals for their entire family.
+A web application where users can plan the weekly meals for their entire family. It will allow them to
+-  Create entries for each individual in the family and curate a list of their choice of food for different meals.
+- Save the recipe, ingredient list, preparation steps for every food item.
+- While planning meals for the week, choose from the preference list a menu item for every family member for all the meals of the week.
+- Get an ingredient list with quantities specified for an entire week to keep handy while ordering grocery for the week.
+- Get a list of tasks which can be done as a preparation for the meal of next day.
+
 
 ## Features
 
@@ -53,10 +59,3 @@ The application follows an MVC-like structure:
 - `src/auth/` - Authentication system
 - `src/db_scripts/` - Database initialization scripts
 - `src/templates/` - Reusable UI components
-
-## Running on Replit
-
-This project is configured to run on Replit. Use the "Run" button or execute:
-```bash
-php -S 0.0.0.0:8080 api.php
-```
