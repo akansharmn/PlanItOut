@@ -22,12 +22,12 @@ class Database {
         try {
             $this->connection = new PDO($dsn, $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            Logger::debug('<p>Successfully connected to the database!</p>');
+           // Logger::debug('<p>Successfully connected to the database!</p>');
 
             // Example query
-            $stmt = $this->connection->query('SELECT current_timestamp');
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            Logger::debug('<p>Current database time: ' . $result['current_timestamp'] . '</p>');
+        //    $stmt = $this->connection->query('SELECT current_timestamp');
+         //   $result = $stmt->fetch(PDO::FETCH_ASSOC);
+       //     Logger::debug('<p>Current database time: ' . $result['current_timestamp'] . '</p>');
 
         } catch (PDOException $e) {
             echo '<p>Detailed connection error: ' . $e->getMessage() . '</p>';
