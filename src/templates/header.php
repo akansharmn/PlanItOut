@@ -49,11 +49,36 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">PlanItOut</a>
+            
+            <?php
+            // Include auth manager
+            require_once 'src/auth/AuthManager.php';
+            $auth = \PlanItOut\Auth\AuthManager::getInstance();
+            
+            // Display appropriate nav links based on auth status
+            if ($auth->isLoggedIn()):
+                $user = $auth->getCurrentUser();
+            ?>
+            <div class="navbar-nav ms-auto">
+                <span class="nav-item nav-link">Welcome, <?= htmlspecialchars($user['username']) ?></span>
+                <a class="nav-item nav-link" href="/logout">Logout</a>
+            </div>
+            <?php else: ?>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-item nav-link" href="/login">Login</a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </nav>
+    
     <div class="container">
-<div id="main-content" class="container mt-4">
-        <!-- HTMX content will be loaded here -->
+        <div id="main-content" class="container mt-4">
+            <!-- HTMX content will be loaded here -->
+        </div>
     </div>
-</div>
     <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

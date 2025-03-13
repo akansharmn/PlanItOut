@@ -13,22 +13,48 @@ $path = parse_url($uri, PHP_URL_PATH);
 // Basic router
 switch ($path) {
     case '/':
+        header('Location: /home');
+        exit;
+    case '/login':
+        include 'src/api/login.php';
+        break;
+    case '/logout':
+        include 'src/api/logout.php';
+        break;
     case '/home':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/home.php';
         break;
     case '/createRecipePage':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/createRecipePage.php';
         break;
     case '/createMealPreferencePage':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/createMealPreferencePage.php';
         break;
     case '/createRecipe':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/createRecipe.php';
         break;
     case '/createMealPreference':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/createMealPreference.php';
         break;
     case '/recipes':
+        require_once 'src/auth/AuthManager.php';
+        $auth = \PlanItOut\Auth\AuthManager::getInstance();
+        $auth->requireLogin(); // Protect this page
         include 'src/api/recipes.php';
         break;
     default:
