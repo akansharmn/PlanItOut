@@ -47,6 +47,9 @@ class Database {
     
     public function query(string $sql, array $params = []): \PDOStatement {
         $stmt = $this->connection->prepare($sql);
+        Logger::debug('executing query'.$sql );
+        
+        Logger::debug('Query parameters: ' . implode(', ', $params));
         $stmt->execute($params);
         return $stmt;
     }

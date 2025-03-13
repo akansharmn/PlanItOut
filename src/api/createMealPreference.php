@@ -3,8 +3,13 @@ namespace PlanItOut\Api;
 
 require_once 'src/Database.php';
 use PlanItOut\Database;
+use PlanItOut\Logger;
 
 header('Content-Type: application/json');
+Logger::debug("entered createMealPreference.php");
+
+Logger::debug($_SERVER['REQUEST_METHOD'] . ' request received');
+Logger::debug('input is:'.  file_get_contents('php://input') );
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -17,8 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Get JSON data from the request body
-$jsonData = file_get_contents('php://input'); 
-$data = json_decode($jsonData, true);
+//$jsonData = file_get_contents('php://input'); 
+//$data = json_decode($jsonData, true);
+
+
+// Check if data is coming from a form or as JSON
+if ($_SERVER['CONTENT_TYPE'] && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    // Get JSON data from the request body
+    $jsonData = file_get_contents('php://input');
+    Logger::debug($jsonData);
+    $data = json_decode($jsonData, true);
+} else {
+    // Get form data
+    $data = $_POST;
+}
+Logger::debug('data is:'.  $data );
+Logger::debug('is mealType set?:'.isset($data['mealType']));
+Logger::debug('is recipeIdSet?:'.isset($data['recipeId']));    
 
 // Validate input data
 if (!$data || !isset($data['mealType']) || empty($data['mealType'])) {
@@ -29,7 +49,7 @@ if (!$data || !isset($data['mealType']) || empty($data['mealType'])) {
     ]);
     exit;
 }
-
+Logger::debug('mealType is set to '.$data['mealType']);
 // We need either recipeName or recipeId
 if ((!isset($data['recipeName']) || empty($data['recipeName'])) && 
     (!isset($data['recipeId']) || !is_numeric($data['recipeId']))) {
@@ -40,6 +60,8 @@ if ((!isset($data['recipeName']) || empty($data['recipeName'])) &&
     ]);
     exit;
 }
+
+Logger::debug('recipeId is set to:'. $data['recipeId']);
 
 try {
     $db = Database::getInstance();
@@ -135,7 +157,8 @@ try {
     ]);
     
 } catch (\Exception $e) {
-    http_response_code(500);
+    http_response_code(200);
+    Logger::debug('exception is'.$e);
     echo json_encode([
         'status' => 'error',
         'message' => 'Server error: ' . $e->getMessage()
