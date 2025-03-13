@@ -13,19 +13,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <!-- HTMX script for form reset -->
- <script>
-   document.addEventListener('htmx:afterSettle', function(event) {
-     // Check if the resetForm event was triggered
-     const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
-     if (triggerHeader) {
-     const triggers = JSON.parse(triggerHeader);
-         Logger::debug(triggers)
-      if (triggers.resetForm) {
-         // Find the form and reset it
-         const form = document.querySelector('form[hx-post="/createRecipe"]');
-         if (form) form.reset();
-       }
-     }
+<script>
+  document.addEventListener('htmx:afterSettle', function(event) {
+    // Check if the resetForm event was triggered
+    const triggerHeader = event.detail.xhr && event.detail.xhr.getResponseHeader('HX-Trigger');
+    if (triggerHeader) {
+      try {
+        const triggers = JSON.parse(triggerHeader);
+        if (triggers.resetForm) {
+          // Reset the form that triggered the request
+          const sourceElement = event.detail.elt;
+          if (sourceElement && sourceElement.tagName === 'FORM') {
+            sourceElement.reset();
+          } else {
+            // Find forms in the document and check if they have htmx attributes
+            const forms = document.querySelectorAll('form[hx-post]');
+            forms.forEach(form => {
+              form.reset();
+            });
+          }
+        }
+      } catch (e) {
+        console.error('Error parsing HX-Trigger header:', e);
+      }
+    }
   });
 </script>
 
