@@ -30,11 +30,6 @@
                 <i class="bi bi-calendar-week me-2"></i>Plan Meals
               </button>
             </div>
-            <div class="col-md-6">
-              <button hx-get="/shopping-list" hx-target="#main-content" class="btn btn-outline-primary w-100">
-                <i class="bi bi-cart me-2"></i>Create Meal Preference
-              </button>
-            </div>
           </div>
         </div>
       </div>

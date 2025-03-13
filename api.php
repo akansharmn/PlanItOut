@@ -25,7 +25,7 @@ Logger::debug('New request: Endpoint: ' . $endpoint);
 $auth = Auth\AuthManager::getInstance();
 
 // Define public endpoints that don't require authentication
-$publicEndpoints = ['login', 'register', 'health', ''];
+$publicEndpoints = ['login', 'register', 'health', 'home',''];
 
 // Check if authentication is required for this endpoint
 $requireAuth = !in_array($endpoint, $publicEndpoints);
