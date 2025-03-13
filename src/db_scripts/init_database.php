@@ -143,3 +143,45 @@ try {
 } catch (PDOException $e) {
     echo "<p>Database error: " . $e->getMessage() . "</p>";
 }
+<?php
+namespace PlanItOut\DbScripts;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../debug.php';
+
+use PlanItOut\Database;
+use PlanItOut\Logger;
+use PDOException;
+
+try {
+    // Get database connection
+    $db = Database::getInstance();
+    
+    // Create recipes table if it doesn't exist
+    $db->query("
+        CREATE TABLE IF NOT EXISTS recipes (
+            id SERIAL PRIMARY KEY,
+            recipe_name VARCHAR(255) NOT NULL,
+            ingredients TEXT,
+            pre_preparations TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
+    
+    // Create users table if it doesn't exist
+    $db->query("
+        CREATE TABLE IF NOT EXISTS users (
+            username TEXT PRIMARY KEY,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
+    
+    Logger::debug('Database tables created successfully');
+    echo "<p>Database tables initialized successfully.</p>";
+    
+} catch (PDOException $e) {
+    Logger::debug('Database initialization error: ' . $e->getMessage());
+    echo "<p>Error initializing database: " . htmlspecialchars($e->getMessage()) . "</p>";
+}
