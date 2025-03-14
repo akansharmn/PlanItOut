@@ -25,4 +25,4 @@ RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html/' /etc
 EXPOSE 80
 
 # Start Apache
-CMD ["apache2-fore"]
+CMD ["apache2-foreground"]
