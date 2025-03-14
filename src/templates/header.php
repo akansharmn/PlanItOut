@@ -83,7 +83,9 @@
             ?>
             <div class="navbar-nav ms-auto">
                 <span class="nav-item nav-link">Welcome, <?= htmlspecialchars($user['username']) ?></span>
-                
+                <a href="/logout" class="nav-item nav-link text-danger">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
             </div>
             <?php else: ?>
             <div class="navbar-nav ms-auto">
