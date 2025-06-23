@@ -1,0 +1,3 @@
+certificate - cloudflare
+server - digital ocean
+AI agent - replit
