@@ -20,6 +20,7 @@ servers:
 proxy:
   ssl: true
   host: plan.akansharaman.com
+  forward_headers: true
   # Proxy connects to your container on port 80 by default.
   # app_port: 3000
 
@@ -45,7 +46,7 @@ builder:
 
 env:
    clear:
-     #DB_HOST: 192.168.0.2
+     DB_HOST: planitout-db
      PGHOST: db
      PGPORT: 5432
    secret:
@@ -68,10 +69,8 @@ env:
 # ssh:
 #   user: app
 
-# Use a persistent storage volume.
-#
-# volumes:
-#   - "app_storage:/app/storage"
+# Use a persistent storage volume.haan
+
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -93,12 +92,15 @@ accessories:
      host: 143.198.29.174
      port: 5432
      env:
-       #clear:
+       clear:
+        DB_HOST: planitout-db
          #MYSQL_ROOT_HOST: '%'
        secret:
          - POSTGRES_DB
          - POSTGRES_USER
          - POSTGRES_PASSWORD
+     directories:
+      - data:/var/lib/postgres/data
 #     files:
 #       - config/mysql/production.cnf:/etc/mysql/my.cnf
 #       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
